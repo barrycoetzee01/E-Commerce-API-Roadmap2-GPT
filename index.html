@@ -1,0 +1,1233 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Commerce E2E Customer Journey Roadmap</title>
+  <style>
+    :root{
+      --navy:#143b6b;
+      --navy-deep:#0f2f57;
+      --teal:#1f7a78;
+      --mint:#61c7b7;
+      --mint-soft:#dff4ef;
+      --blue-soft:#e9f1fb;
+      --panel:#f3f5f7;
+      --card:#ffffff;
+      --text:#16324f;
+      --muted:#58708d;
+      --line:#d9e2ec;
+      --warn:#f2a65a;
+      --danger:#db5b5b;
+      --success:#3ca370;
+      --shadow:0 10px 24px rgba(20,59,107,.10);
+      --radius:18px;
+      --radius-sm:12px;
+      --max:1240px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      background:var(--panel);
+      color:var(--text);
+      line-height:1.5;
+    }
+
+    .hero{
+      background:linear-gradient(135deg,var(--navy) 0%, #184a84 45%, var(--teal) 100%);
+      color:#fff;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero::before,
+    .hero::after{
+      content:"";
+      position:absolute;
+      border-radius:50%;
+      background:rgba(255,255,255,.06);
+      pointer-events:none;
+    }
+
+    .hero::before{
+      width:220px;
+      height:220px;
+      left:-70px;
+      top:80px;
+    }
+
+    .hero::after{
+      width:280px;
+      height:280px;
+      right:-70px;
+      top:-40px;
+    }
+
+    .wrap{
+      width:min(100%,var(--max));
+      margin:0 auto;
+      padding:0 16px;
+    }
+
+    .hero-inner{
+      padding:34px 0 28px;
+      text-align:center;
+      position:relative;
+      z-index:1;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      padding:6px 14px;
+      border:1px solid rgba(255,255,255,.25);
+      border-radius:999px;
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:#dbe9fb;
+      background:rgba(255,255,255,.06);
+    }
+
+    h1{
+      margin:16px auto 8px;
+      font-size:clamp(2rem,4vw,3.5rem);
+      line-height:1.08;
+      max-width:960px;
+      font-weight:800;
+    }
+
+    .hero h1 .mint{
+      color:var(--mint);
+    }
+
+    .sub{
+      margin:0 auto 18px;
+      max-width:820px;
+      color:#d8e8f8;
+      font-size:clamp(.98rem,1.8vw,1.08rem);
+    }
+
+    .scorebar{
+      margin:18px auto 0;
+      width:min(100%,640px);
+      display:grid;
+      grid-template-columns:1fr auto 1fr 1.2fr;
+      gap:0;
+      background:rgba(8,25,47,.38);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+
+    .scorecell{
+      padding:12px 10px;
+      text-align:center;
+    }
+
+    .scorecell strong{
+      display:block;
+      font-size:clamp(1.1rem,2vw,1.8rem);
+      line-height:1;
+      margin-bottom:3px;
+      font-weight:800;
+    }
+
+    .scorecell span{
+      display:block;
+      font-size:11px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#d7e6f7;
+      font-weight:700;
+    }
+
+    .scorecell.arrow{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:1.6rem;
+      color:var(--mint);
+      font-weight:800;
+    }
+
+    .main{
+      padding:26px 0 30px;
+    }
+
+    .grid{
+      display:grid;
+      gap:16px;
+    }
+
+    .top-grid{
+      grid-template-columns:1fr;
+    }
+
+    .mid-grid{
+      grid-template-columns:1fr;
+      margin-top:16px;
+    }
+
+    .bottom-grid{
+      grid-template-columns:1fr;
+      margin-top:16px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+
+    .card-top-blue{border-top:4px solid #4a89dc}
+    .card-top-green{border-top:4px solid var(--success)}
+    .card-top-navy{border-top:4px solid var(--navy)}
+    .card-top-teal{border-top:4px solid #2ca5a0}
+    .card-top-orange{border-top:4px solid var(--warn)}
+    .card-top-red{border-top:4px solid var(--danger)}
+
+    .label{
+      display:inline-block;
+      font-size:10px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      border:1px solid #d6e3f2;
+      color:#6a84a3;
+      background:#f9fbfd;
+      border-radius:999px;
+      padding:5px 10px;
+      margin-bottom:12px;
+    }
+
+    h2{
+      margin:0 0 10px;
+      font-size:1.38rem;
+      line-height:1.2;
+    }
+
+    h3{
+      margin:0 0 8px;
+      font-size:1.08rem;
+      line-height:1.25;
+    }
+
+    p{
+      margin:0 0 10px;
+      color:var(--muted);
+      font-size:.96rem;
+    }
+
+    .small{
+      font-size:.9rem;
+    }
+
+    .dark-quote{
+      background:var(--navy);
+      color:#fff;
+      padding:16px;
+      border-radius:12px;
+      margin-top:10px;
+    }
+
+    .dark-quote p{
+      color:#e4eef8;
+      margin:0;
+      font-size:.92rem;
+    }
+
+    .list{
+      margin:10px 0 0;
+      padding-left:18px;
+      color:var(--muted);
+      font-size:.94rem;
+    }
+
+    .list li{margin-bottom:6px}
+
+    .steps{
+      display:grid;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .step{
+      display:grid;
+      grid-template-columns:30px 1fr;
+      gap:10px;
+      align-items:flex-start;
+    }
+
+    .num{
+      width:30px;
+      height:30px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      font-size:.86rem;
+      color:#fff;
+      background:var(--teal);
+      flex:0 0 30px;
+    }
+
+    .formula-box{
+      background:#f7fafc;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+      margin-top:10px;
+    }
+
+    .formula-part{
+      border:1px solid #dce6f1;
+      background:#f2f7fd;
+      border-radius:10px;
+      padding:10px;
+      margin-top:10px;
+    }
+
+    .formula-part.green{
+      background:#eef9f5;
+      border-color:#cfeadf;
+    }
+
+    .formula-part.blue{
+      background:#f2f7fd;
+    }
+
+    .formula-part.mint{
+      background:#f1fbf8;
+      border-color:#d3eee7;
+    }
+
+    .formula-title{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-weight:800;
+      color:#557596;
+      margin-bottom:4px;
+    }
+
+    .compare{
+      display:grid;
+      gap:12px;
+      grid-template-columns:1fr;
+      margin-top:12px;
+    }
+
+    .compare-block h4{
+      margin:0 0 8px;
+      font-size:.9rem;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:#47698d;
+    }
+
+    .approach{
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+      background:#fbfcfe;
+      color:#56708f;
+      font-size:.92rem;
+      margin-top:8px;
+    }
+
+    .approach.socratic{
+      background:#eef9f5;
+      border-color:#cce7dc;
+      color:#305b54;
+    }
+
+    .divider-note{
+      margin:10px 0;
+      text-align:center;
+      color:#6b85a1;
+      font-size:.83rem;
+      font-weight:700;
+    }
+
+    .use-skip{
+      display:grid;
+      gap:10px;
+      grid-template-columns:1fr;
+      margin-top:10px;
+    }
+
+    .use-box,
+    .skip-box{
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+      background:#fbfcfe;
+    }
+
+    .use-box{
+      background:#f0faf5;
+      border-color:#cfe8db;
+    }
+
+    .use-box h4,
+    .skip-box h4{
+      margin:0 0 8px;
+      font-size:.9rem;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .quote-box{
+      border:1px solid var(--line);
+      background:#f8fbff;
+      border-radius:12px;
+      padding:14px;
+      color:#64809d;
+      font-style:italic;
+      margin-top:10px;
+    }
+
+    .journey-map{
+      display:grid;
+      gap:14px;
+      margin-top:10px;
+      grid-template-columns:1fr;
+    }
+
+    .journey-stage{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+      background:#fff;
+      position:relative;
+    }
+
+    .journey-stage .stage-head{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:8px;
+      flex-wrap:wrap;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:34px;
+      height:34px;
+      padding:0 10px;
+      border-radius:999px;
+      color:#fff;
+      font-weight:800;
+      font-size:.85rem;
+      background:var(--navy);
+    }
+
+    .badge.teal{background:var(--teal)}
+    .badge.mint{background:#3ea99c}
+    .badge.orange{background:var(--warn); color:#17324f}
+    .badge.red{background:var(--danger)}
+    .badge.green{background:var(--success)}
+
+    .api-strip{
+      margin-top:10px;
+      border:1px solid #dce6f1;
+      background:#f6faff;
+      border-radius:10px;
+      padding:10px;
+      font-size:.88rem;
+      color:#527090;
+    }
+
+    .road-line{
+      display:none;
+    }
+
+    .legend{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .legend span{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      font-size:.88rem;
+      color:#54708e;
+      background:#f7fafc;
+      border:1px solid var(--line);
+      padding:8px 10px;
+      border-radius:999px;
+    }
+
+    .dot{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      display:inline-block;
+    }
+
+    .lane-grid{
+      display:grid;
+      gap:16px;
+      grid-template-columns:1fr;
+      margin-top:10px;
+    }
+
+    .lane{
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#fff;
+      padding:14px;
+    }
+
+    .lane-step{
+      display:grid;
+      grid-template-columns:32px 1fr;
+      gap:12px;
+      padding:12px 0;
+      border-bottom:1px solid #e6edf4;
+    }
+
+    .lane-step:last-child{
+      border-bottom:none;
+      padding-bottom:0;
+    }
+
+    .lane-bubble{
+      width:32px;
+      height:32px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:var(--navy);
+      color:#fff;
+      font-weight:800;
+      font-size:.85rem;
+    }
+
+    .check-grid{
+      display:grid;
+      gap:12px;
+      grid-template-columns:1fr;
+      margin-top:10px;
+    }
+
+    .check{
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:#fbfcfe;
+      padding:12px;
+    }
+
+    .check h4{
+      margin:0 0 8px;
+      font-size:1rem;
+    }
+
+    .state-grid{
+      display:grid;
+      gap:12px;
+      grid-template-columns:1fr;
+      margin-top:10px;
+    }
+
+    .state-box{
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:#fbfcfe;
+      padding:12px;
+    }
+
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:10px;
+    }
+
+    .chip{
+      font-size:.82rem;
+      font-weight:700;
+      color:#426380;
+      background:#eef4fb;
+      border:1px solid #d5e3f0;
+      border-radius:999px;
+      padding:7px 10px;
+    }
+
+    .failure-grid{
+      display:grid;
+      gap:12px;
+      grid-template-columns:1fr;
+      margin-top:10px;
+    }
+
+    .failure{
+      border-radius:14px;
+      padding:14px;
+      color:#fff;
+    }
+
+    .failure.red{background:linear-gradient(135deg,#c74747,#e06666)}
+    .failure.orange{background:linear-gradient(135deg,#d98b3a,#f2a65a)}
+    .failure.blue{background:linear-gradient(135deg,#24538b,#3e7bc1)}
+    .failure.green{background:linear-gradient(135deg,#2f8363,#4cad83)}
+
+    .failure p{color:#f6fbff}
+
+    .summary-grid{
+      display:grid;
+      gap:12px;
+      grid-template-columns:1fr;
+      margin-top:10px;
+    }
+
+    .summary-card{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:16px;
+      text-align:center;
+      background:#fff;
+    }
+
+    .summary-icon{
+      font-size:1.8rem;
+      margin-bottom:8px;
+    }
+
+    .footer-bar{
+      width:min(100%,var(--max));
+      margin:26px auto 24px;
+      background:var(--navy-deep);
+      color:#fff;
+      border-radius:12px;
+      padding:12px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .footer-left{
+      font-size:.84rem;
+      color:#c9d9ec;
+    }
+
+    .footer-right{
+      font-size:.8rem;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      background:linear-gradient(135deg,#1c6f73,#2f8d87);
+      color:#dff9f3;
+      padding:8px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    @media (min-width: 760px){
+      .top-grid{
+        grid-template-columns:repeat(3,1fr);
+      }
+
+      .mid-grid{
+        grid-template-columns:2fr 1fr;
+      }
+
+      .bottom-grid{
+        grid-template-columns:1fr;
+      }
+
+      .compare{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .use-skip{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .lane-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .check-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .state-grid{
+        grid-template-columns:repeat(3,1fr);
+      }
+
+      .failure-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .summary-grid{
+        grid-template-columns:repeat(3,1fr);
+      }
+    }
+
+    @media (min-width: 980px){
+      .journey-map{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media (min-width: 1200px){
+      .bottom-grid{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <div class="eyebrow">Strategic QA Training Module</div>
+      <h1>Mastering <span class="mint">E-Commerce E2E API Testing</span></h1>
+      <p class="sub">A visual roadmap that shows exactly how the customer journey flows from browse to payment to order creation, with the full checkout and payment integration path laid out clearly.</p>
+
+      <div class="scorebar">
+        <div class="scorecell">
+          <strong>10/10</strong>
+          <span>Journey Coverage</span>
+        </div>
+        <div class="scorecell arrow">→</div>
+        <div class="scorecell">
+          <strong>9/10</strong>
+          <span>Checkout Focus</span>
+        </div>
+        <div class="scorecell">
+          <strong>Production Grade Flow</strong>
+          <span>Training Dashboard</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="wrap">
+
+      <section class="grid top-grid">
+        <article class="card card-top-blue">
+          <div class="label">💡 The Testing Goal</div>
+          <h3>How strong E2E API testers think</h3>
+          <p>Do not test endpoints in isolation only. Test the full revenue journey as one connected business system.</p>
+          <p>Every major step must prove data accuracy, state integrity, safe failure handling, and exact alignment across services.</p>
+          <div class="dark-quote">
+            <p><strong>Core mindset:</strong> a real checkout journey is not successful just because one payment API returned 200. It is only successful if payment, order, stock, totals, and confirmation all agree.</p>
+          </div>
+        </article>
+
+        <article class="card card-top-green">
+          <div class="label">⚡ Why It Matters</div>
+          <h3>What revenue-critical flows must hold</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="num">1</div>
+              <div>
+                <strong>Protect revenue</strong>
+                <p class="small">Customers must be able to search, buy, and pay without hidden data breaks.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="num">2</div>
+              <div>
+                <strong>Protect customer trust</strong>
+                <p class="small">No wrong totals, no double charges, no ghost orders, no stock lies.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="num">3</div>
+              <div>
+                <strong>Protect operations</strong>
+                <p class="small">Warehouse, notifications, reconciliation, refunds, and shipping all depend on clean order state.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card card-top-navy">
+          <div class="label">🧱 Core Structure</div>
+          <h3>The 3-part E2E testing formula</h3>
+          <p>Use this structure to design every serious e-commerce API flow.</p>
+          <div class="formula-box">
+            <div class="formula-part blue">
+              <div class="formula-title">Part 1 • Customer action</div>
+              <div>What is the customer trying to do right now in the journey?</div>
+            </div>
+            <div class="formula-part green">
+              <div class="formula-title">Part 2 • Backend orchestration</div>
+              <div>Which services, validations, and integrations must work together behind the scenes?</div>
+            </div>
+            <div class="formula-part mint">
+              <div class="formula-title">Part 3 • Test proof</div>
+              <div>What exact data, states, totals, and side effects must be validated to prove it worked?</div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="grid mid-grid">
+        <article class="card card-top-blue">
+          <div class="label">📘 Customer Journey Roadmap</div>
+          <h2>Seeing the full E2E quality path in practice</h2>
+
+          <div class="journey-map">
+            <div class="journey-stage">
+              <div class="stage-head">
+                <span class="badge">1</span>
+                <h3>Browse and Search</h3>
+              </div>
+              <p>Customer searches products, opens categories, filters results, and expects accurate products to appear.</p>
+              <ul class="list">
+                <li>Catalog data must be available and valid</li>
+                <li>Price preview and stock preview must be current enough to trust</li>
+                <li>Hidden or inactive SKUs must not leak into results</li>
+              </ul>
+              <div class="api-strip"><strong>APIs:</strong> GET /products, GET /search, GET /categories, GET /price, GET /inventory</div>
+            </div>
+
+            <div class="journey-stage">
+              <div class="stage-head">
+                <span class="badge teal">2</span>
+                <h3>Product Detail View</h3>
+              </div>
+              <p>Customer opens a product detail page and chooses a variant, size, quantity, or color.</p>
+              <ul class="list">
+                <li>Correct SKU and variant mapping must be returned</li>
+                <li>Price, stock, shipping flags, tax hints, and media must align</li>
+                <li>Variant-specific availability must be accurate</li>
+              </ul>
+              <div class="api-strip"><strong>APIs:</strong> GET /products/{id}, GET /products/{id}/variants, GET /inventory/{sku}</div>
+            </div>
+
+            <div class="journey-stage">
+              <div class="stage-head">
+                <span class="badge mint">3</span>
+                <h3>Add to Cart</h3>
+              </div>
+              <p>Customer starts the purchase intent by placing one or more items into cart.</p>
+              <ul class="list">
+                <li>Create cart for guest or logged-in user</li>
+                <li>Add single or multiple line items</li>
+                <li>Ensure quantity rules and per-item limits are enforced</li>
+              </ul>
+              <div class="api-strip"><strong>APIs:</strong> POST /cart, POST /cart/items, GET /cart</div>
+            </div>
+
+            <div class="journey-stage">
+              <div class="stage-head">
+                <span class="badge orange">4</span>
+                <h3>Update Cart</h3>
+              </div>
+              <p>Customer changes quantities, removes items, or applies early discount logic.</p>
+              <ul class="list">
+                <li>Cart totals must recalculate correctly</li>
+                <li>Discounts must apply once and only once</li>
+                <li>Stale stock or stale pricing must be rechecked later at checkout</li>
+              </ul>
+              <div class="api-strip"><strong>APIs:</strong> PUT /cart/items/{id}, DELETE /cart/items/{id}, POST /cart/coupon</div>
+            </div>
+
+            <div class="journey-stage">
+              <div class="stage-head">
+                <span class="badge green">5</span>
+                <h3>Identity and Session State</h3>
+              </div>
+              <p>Customer either logs in, signs up, or continues as guest checkout.</p>
+              <ul class="list">
+                <li>Customer profile must attach safely to the checkout journey</li>
+                <li>Guest cart merge must not lose items</li>
+                <li>No session leakage across users</li>
+              </ul>
+              <div class="api-strip"><strong>APIs:</strong> POST /login, POST /guest-session, GET /customer/profile, POST /cart/merge</div>
+            </div>
+
+            <div class="journey-stage">
+              <div class="stage-head">
+                <span class="badge red">6</span>
+                <h3>Checkout Setup</h3>
+              </div>
+              <p>Customer enters shipping and billing details, chooses a delivery method, and applies promotions.</p>
+              <ul class="list">
+                <li>Shipping address must be serviceable</li>
+                <li>Shipping methods must reflect destination and cart contents</li>
+                <li>Tax and final provisional total must recalculate</li>
+              </ul>
+              <div class="api-strip"><strong>APIs:</strong> POST /checkout/address/shipping, GET /checkout/shipping-methods, POST /checkout/address/billing, POST /checkout/apply-coupon</div>
+            </div>
+
+            <div class="journey-stage">
+              <div class="stage-head">
+                <span class="badge">7</span>
+                <h3>Final Validation Gate</h3>
+              </div>
+              <p>This is the last trust checkpoint before money moves.</p>
+              <ul class="list">
+                <li>Revalidate stock, price, promo, tax, shipping, and currency</li>
+                <li>Freeze or snapshot final payable amount</li>
+                <li>Block payment if anything changed materially</li>
+              </ul>
+              <div class="api-strip"><strong>APIs:</strong> POST /checkout/session, POST /checkout/validate, GET /checkout/summary</div>
+            </div>
+
+            <div class="journey-stage">
+              <div class="stage-head">
+                <span class="badge teal">8</span>
+                <h3>Inventory Reservation</h3>
+              </div>
+              <p>Before payment completes, the platform may reserve stock so two customers cannot both buy the last item.</p>
+              <ul class="list">
+                <li>Create reservation tied to checkout session</li>
+                <li>Reservation timeout rules must work</li>
+                <li>Failed payment must release reserved stock safely</li>
+              </ul>
+              <div class="api-strip"><strong>APIs:</strong> POST /inventory/reservations, DELETE /inventory/reservations/{id}</div>
+            </div>
+
+            <div class="journey-stage">
+              <div class="stage-head">
+                <span class="badge mint">9</span>
+                <h3>Payment Integration</h3>
+              </div>
+              <p>Create payment intent, authorize or charge, process 3DS if needed, and handle the provider callback path.</p>
+              <ul class="list">
+                <li>Payment amount must exactly match trusted checkout total</li>
+                <li>Idempotency must stop duplicate charges</li>
+                <li>Sync response and async webhook must not create race conditions</li>
+              </ul>
+              <div class="api-strip"><strong>APIs:</strong> POST /payments/intents, POST /payments/authorize, POST /payments/charge, POST /payments/webhooks/provider</div>
+            </div>
+
+            <div class="journey-stage">
+              <div class="stage-head">
+                <span class="badge orange">10</span>
+                <h3>Order Creation and Confirmation</h3>
+              </div>
+              <p>Once payment is in a valid success state, the order is created exactly once and pushed downstream.</p>
+              <ul class="list">
+                <li>One order only, with correct totals, customer, addresses, and payment link</li>
+                <li>Confirmation must trigger only after valid order creation</li>
+                <li>Fulfillment, warehouse, and notification flows must receive consistent data</li>
+              </ul>
+              <div class="api-strip"><strong>APIs:</strong> POST /orders, POST /notifications/order-confirmation, POST /fulfillment/orders</div>
+            </div>
+          </div>
+
+          <div class="legend">
+            <span><i class="dot" style="background: var(--navy)"></i> Core journey state</span>
+            <span><i class="dot" style="background: var(--teal)"></i> Checkout and orchestration</span>
+            <span><i class="dot" style="background: #3ea99c"></i> Commerce operations</span>
+            <span><i class="dot" style="background: var(--warn)"></i> High-risk validation point</span>
+            <span><i class="dot" style="background: var(--danger)"></i> Critical failure exposure</span>
+          </div>
+        </article>
+
+        <article class="card card-top-navy">
+          <div class="label">🧭 Testing Guide</div>
+          <h3>When this flow is most valuable</h3>
+          <p>This roadmap is strongest when you need to understand cross-service behavior, checkout dependencies, and production-risk defects.</p>
+
+          <div class="use-skip">
+            <div class="use-box">
+              <h4>✔ Use for</h4>
+              <ul class="list">
+                <li>Strategic end-to-end testing</li>
+                <li>Checkout and payment analysis</li>
+                <li>API integration training</li>
+                <li>Microservice flow understanding</li>
+                <li>Interview preparation for senior QA roles</li>
+              </ul>
+            </div>
+            <div class="skip-box">
+              <h4>– Not enough on its own for</h4>
+              <ul class="list">
+                <li>Pure unit testing</li>
+                <li>Simple endpoint smoke checks only</li>
+                <li>UI-only exploratory testing</li>
+                <li>Performance testing without data modeling</li>
+                <li>Security testing without auth abuse scenarios</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="grid bottom-grid">
+        <article class="card card-top-teal">
+          <div class="label">🔐 Advanced Focus</div>
+          <h2>Checkout and payment integration in exact flow order</h2>
+          <p>This is the most important flow on the page. It shows how a real e-commerce system should move from checkout setup into safe payment execution.</p>
+
+          <div class="lane-grid">
+            <div class="lane">
+              <h3>Checkout orchestration lane</h3>
+
+              <div class="lane-step">
+                <div class="lane-bubble">1</div>
+                <div>
+                  <strong>Create checkout session</strong>
+                  <p>Server builds a trusted checkout context tied to cart, customer, currency, and current pricing snapshot.</p>
+                  <p class="small"><strong>Validate:</strong> session ID, cart link, customer link, currency, expiry window.</p>
+                </div>
+              </div>
+
+              <div class="lane-step">
+                <div class="lane-bubble">2</div>
+                <div>
+                  <strong>Revalidate cart before money moves</strong>
+                  <p>System rechecks stock, price, promo validity, tax rules, and shipping availability.</p>
+                  <p class="small"><strong>Validate:</strong> no stale price, no expired promo, no hidden stock problem, no shipping mismatch.</p>
+                </div>
+              </div>
+
+              <div class="lane-step">
+                <div class="lane-bubble">3</div>
+                <div>
+                  <strong>Freeze final total</strong>
+                  <p>The final payable amount becomes the source of truth for payment intent creation.</p>
+                  <p class="small"><strong>Validate:</strong> subtotal, discounts, tax, shipping, credits, and grand total all add up exactly.</p>
+                </div>
+              </div>
+
+              <div class="lane-step">
+                <div class="lane-bubble">4</div>
+                <div>
+                  <strong>Reserve inventory</strong>
+                  <p>Reserve stock for the checkout session so overselling does not occur during payment processing.</p>
+                  <p class="small"><strong>Validate:</strong> reservation ID, SKU coverage, quantity coverage, release behavior if payment fails.</p>
+                </div>
+              </div>
+
+              <div class="lane-step">
+                <div class="lane-bubble">5</div>
+                <div>
+                  <strong>Prepare payment payload</strong>
+                  <p>Build the provider request using exact amount, currency, billing details, checkout reference, and idempotency key.</p>
+                  <p class="small"><strong>Validate:</strong> payment request amount equals frozen total with zero mismatch.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="lane">
+              <h3>Payment execution and order lane</h3>
+
+              <div class="lane-step">
+                <div class="lane-bubble">6</div>
+                <div>
+                  <strong>Create payment intent</strong>
+                  <p>System creates a payment record or provider intent before actual authorization or charge.</p>
+                  <p class="small"><strong>Validate:</strong> provider ref, internal transaction ref, idempotency handling, state = initiated.</p>
+                </div>
+              </div>
+
+              <div class="lane-step">
+                <div class="lane-bubble">7</div>
+                <div>
+                  <strong>Authorize or charge payment</strong>
+                  <p>Card, wallet, or alternate payment method is processed. 3DS or redirect flows may branch here.</p>
+                  <p class="small"><strong>Validate:</strong> approved, declined, timeout, abandoned redirect, 3DS success, 3DS fail.</p>
+                </div>
+              </div>
+
+              <div class="lane-step">
+                <div class="lane-bubble">8</div>
+                <div>
+                  <strong>Handle callback or webhook</strong>
+                  <p>Payment gateway sends async final state. This must be verified and processed idempotently.</p>
+                  <p class="small"><strong>Validate:</strong> signature check, duplicate webhook handling, valid state transition only.</p>
+                </div>
+              </div>
+
+              <div class="lane-step">
+                <div class="lane-bubble">9</div>
+                <div>
+                  <strong>Create order exactly once</strong>
+                  <p>Once payment is confirmed valid enough, order is created with correct totals, customer, stock link, and payment reference.</p>
+                  <p class="small"><strong>Validate:</strong> one order only, correct line items, correct payment link, correct status.</p>
+                </div>
+              </div>
+
+              <div class="lane-step">
+                <div class="lane-bubble">10</div>
+                <div>
+                  <strong>Publish downstream events</strong>
+                  <p>Confirmation, fulfillment, warehouse, finance, and analytics systems receive clean order data.</p>
+                  <p class="small"><strong>Validate:</strong> no duplicate events, no lost events, no order-confirmation sent before real order creation.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quote-box">
+            “The amount charged, the order total, the inventory reservation, and the final order record must all match. That is the heart of trustworthy e-commerce E2E testing.”
+          </div>
+        </article>
+
+        <article class="card card-top-blue">
+          <div class="label">✅ What Must Be Verified</div>
+          <h2>Critical validation checkpoints</h2>
+
+          <div class="check-grid">
+            <div class="check">
+              <h4>Totals and money accuracy</h4>
+              <ul class="list">
+                <li>Subtotal is correct</li>
+                <li>Discount logic is correct</li>
+                <li>Tax is correct</li>
+                <li>Shipping charge is correct</li>
+                <li>Final payable amount matches payment request</li>
+              </ul>
+            </div>
+
+            <div class="check">
+              <h4>State transition integrity</h4>
+              <ul class="list">
+                <li>No illegal order state jump</li>
+                <li>No payment marked captured after failure</li>
+                <li>No paid order without valid payment evidence</li>
+                <li>No order created twice</li>
+              </ul>
+            </div>
+
+            <div class="check">
+              <h4>Inventory correctness</h4>
+              <ul class="list">
+                <li>Reservation exists when needed</li>
+                <li>Reservation is released on failure</li>
+                <li>No overselling in concurrency case</li>
+                <li>Committed stock matches paid order</li>
+              </ul>
+            </div>
+
+            <div class="check">
+              <h4>Resilience and safety</h4>
+              <ul class="list">
+                <li>Retries are idempotent</li>
+                <li>Duplicate clicks do not double charge</li>
+                <li>Duplicate webhooks do not duplicate orders</li>
+                <li>Timeouts leave recoverable state</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="card card-top-green">
+          <div class="label">🔄 State Model</div>
+          <h2>Clean business states a tester should track</h2>
+
+          <div class="state-grid">
+            <div class="state-box">
+              <h3>Checkout states</h3>
+              <div class="chips">
+                <span class="chip">Cart Created</span>
+                <span class="chip">Checkout Started</span>
+                <span class="chip">Address Set</span>
+                <span class="chip">Shipping Selected</span>
+                <span class="chip">Total Confirmed</span>
+                <span class="chip">Payment Initiated</span>
+              </div>
+            </div>
+
+            <div class="state-box">
+              <h3>Payment states</h3>
+              <div class="chips">
+                <span class="chip">Initiated</span>
+                <span class="chip">Pending Auth</span>
+                <span class="chip">Authorized</span>
+                <span class="chip">Captured</span>
+                <span class="chip">Failed</span>
+                <span class="chip">Refunded</span>
+              </div>
+            </div>
+
+            <div class="state-box">
+              <h3>Order states</h3>
+              <div class="chips">
+                <span class="chip">Pending Payment</span>
+                <span class="chip">Paid</span>
+                <span class="chip">Confirmed</span>
+                <span class="chip">Allocated</span>
+                <span class="chip">Shipped</span>
+                <span class="chip">Cancelled</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card card-top-red">
+          <div class="label">🚨 High-risk Failure Paths</div>
+          <h2>Production defects this roadmap is designed to catch</h2>
+
+          <div class="failure-grid">
+            <div class="failure red">
+              <h3>Payment success but no order</h3>
+              <p>Gateway approved the transaction, but order creation failed. Customer was charged, operations have nothing to fulfill.</p>
+            </div>
+
+            <div class="failure orange">
+              <h3>Duplicate order on retry</h3>
+              <p>Customer clicks pay twice, timeout triggers retry, or callback replays. Without idempotency, the system creates multiple orders.</p>
+            </div>
+
+            <div class="failure blue">
+              <h3>Stale totals during checkout</h3>
+              <p>Cart total changed after promo, tax, or shipping recalculation, but payment was still created with the old amount.</p>
+            </div>
+
+            <div class="failure green">
+              <h3>Inventory not released after failure</h3>
+              <p>Payment fails, but stock reservation remains locked, causing false out-of-stock conditions for other customers.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card card-top-orange">
+          <div class="label">🧩 Practical Summary</div>
+          <h2>The core E2E customer journey in simple chart form</h2>
+
+          <div class="summary-grid">
+            <div class="summary-card">
+              <div class="summary-icon">🛍️</div>
+              <h3>Step 1 • Shop</h3>
+              <p>Browse, search, view details, add to cart, adjust quantity, and choose whether to continue as guest or user.</p>
+            </div>
+
+            <div class="summary-card">
+              <div class="summary-icon">💳</div>
+              <h3>Step 2 • Checkout</h3>
+              <p>Enter shipping, apply promo, calculate tax and shipping, validate totals, reserve stock, and process payment.</p>
+            </div>
+
+            <div class="summary-card">
+              <div class="summary-icon">📦</div>
+              <h3>Step 3 • Fulfill</h3>
+              <p>Create order, commit stock, send confirmation, trigger warehouse, and keep financial and operational records aligned.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <div class="footer-bar">
+        <div class="footer-left">E-Commerce E2E API Testing • Customer Journey Training Reference</div>
+        <div class="footer-right">Brought to you by ChelcamTech</div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
